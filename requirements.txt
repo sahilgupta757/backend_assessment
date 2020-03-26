@@ -3,3 +3,5 @@ gunicorn==19.7.1
 ipdb==0.10.3
 mongoengine==0.15.0
 protobuf==3.6.0
+flask-swagger==0.2.14
+flask-swagger-ui==3.20.9
