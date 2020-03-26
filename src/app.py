@@ -3,7 +3,6 @@ from flask import Flask
 import os
 import logging.config
 import mongoengine
-from flask_swagger_ui import get_swaggerui_blueprint
 
 
 application = Flask(os.environ.get("APPLICATION_NAME"))
@@ -39,24 +38,3 @@ mongoengine.connect(
     username=application.config['MONGO_SETTINGS']['DB_USERNAME'],
     password=application.config['MONGO_SETTINGS']['DB_PASSWORD'],
 )
-
-
-
-@application.route("/static/<path:path>")
-def send_static(path):
-    return send_from_directory('static', path)
-
-
-### swagger specific ###
-SWAGGER_URL = '/swagger'
-API_URL = '/static/swagger.json'
-SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
-    SWAGGER_URL,
-    API_URL,
-    config={
-        'app_name': "Spotmentor"
-    }
-)
-application.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
-### end swagger specific ###
-
