@@ -2,7 +2,6 @@ class UserService(object):
     """
     service function for user related business logic
     """
-
     def login_user(self):
         """
         TASKS: write the logic here for user login
@@ -11,5 +10,4 @@ class UserService(object):
 
                raise appropriate errors wherever necessary
         """
-
         pass

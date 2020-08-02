@@ -1,4 +1,4 @@
-from mongoengine import Document
+from mongoengine import Document, StringField
 
 
 class User(Document):
@@ -8,5 +8,9 @@ class User(Document):
 
     HINT: Do not store password as is.
     """
+    def __int__(self, username, password):
+        self.username = username
+        self.password = password
 
-    pass
+    username = StringField(unique=True, required=True)
+    password = StringField(required=True)
