@@ -14,14 +14,12 @@ def index():
 
 def create_user():
     data = request.get_json()
-    if request.method == 'POST':
-        user = User.objects(username=data.get('username')).first()
-        if user:
-            return jsonify({'message': 'User already exists'}), 400
-        pw = generate_password_hash(password=data.get('password'), method="sha256", salt_length=8)
-        new_user = User(data.get('username'),
-                        pw)
-        new_user.save()
+    user = User.objects(username=data.get('username')).first()
+    if user:
+        return jsonify({'message': 'User already exists'}), 400
+    pw = generate_password_hash(password=data.get('password'), method="sha256", salt_length=8)
+    new_user = User(data.get('username'), pw)
+    new_user.save()
     return jsonify({'message': 'User created successfully'}), 201
 
 
@@ -35,12 +33,11 @@ def login():
 
     data = request.get_json()
     user = User.objects(username=data.get('username')).first()
-    if request.method == 'POST':
-        if user:
-            auth = check_password_hash(pwhash=user.password, password=data.get('password'))
-            if auth is False:
-                return jsonify({"message": "username or password does not match, please try again"}), 401
-            return jsonify({"message": "User has logged in successfully"}), 200
-        return jsonify({"message": "User does not exist"}), 400
-    return jsonify({"message": "user logged in"}), 200
+    if user:
+        auth = check_password_hash(pwhash=user.password, password=data.get('password'))
+        if auth is False:
+            return jsonify({"message": "username or password does not match, please try again"}), 401
+        return jsonify({"message": "User has logged in successfully"}), 200
+    return jsonify({"message": "User does not exist"}), 400
+
 
